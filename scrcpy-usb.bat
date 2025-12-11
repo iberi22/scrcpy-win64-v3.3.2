@@ -93,14 +93,14 @@ echo DEBUG_3: despues put show_ime
 rem Lanzar scrcpy en background y luego intentar ocultar el teclado con KEYCODE_BACK
 echo Iniciando scrcpy en background...
 if %USE_VIRTUAL%==1 (
-    start "scrcpy" /B "%SCRCPY%" -d -b %BITRATE% --max-fps %FPS% --stay-awake --screen-off-timeout=%SCREEN_OFF_TIMEOUT% --new-display --display-ime-policy=hide --window-title "Android USB (virtual)" --always-on-top
+    start "scrcpy" "%SCRCPY%" -d -b %BITRATE% --max-fps %FPS% --stay-awake --screen-off-timeout=%SCREEN_OFF_TIMEOUT% --new-display --display-ime-policy=hide --window-title "Android USB (virtual)" --always-on-top
 ) else (
     rem Construir comando base
     set "SCRCPY_CMD=%SCRCPY% -d -b %BITRATE% --max-fps %FPS% --stay-awake --screen-off-timeout=%SCREEN_OFF_TIMEOUT% --window-title "Android USB" --always-on-top"
     if %USE_UHID%==1 (
         set "SCRCPY_CMD=%SCRCPY_CMD% --keyboard=uhid"
     )
-    start "scrcpy" /B %SCRCPY_CMD%
+    start "scrcpy" %SCRCPY_CMD%
 )
 
 rem Esperar un momento a que scrcpy arranque
@@ -127,6 +127,7 @@ if not "%OLD_SHOW_IME%"=="-1" (
 )
 
 endlocal
+goto :EOF
 
 :DO_TCPIP
 echo Habilitando tcpip en el dispositivo (puerto %TCPIP_PORT%)...
